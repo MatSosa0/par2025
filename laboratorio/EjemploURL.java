@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class EjemploURL {
+    @SuppressWarnings("deprecation")
     public static void main(String[] args) throws IOException {
         
         String test_url = "http://www.pol.una.py";

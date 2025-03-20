@@ -6,10 +6,11 @@ import java.io.*;
 import java.net.*;
 
 public class PeticionGET {
-
+    @SuppressWarnings("ConvertToTryWithResources")
     public static void main(String[] args) {
         try {
             String var_url = "https://www.google.com/";
+            @SuppressWarnings("deprecation")
             URL url = new URL(var_url);
 
             URLConnection conexion = url.openConnection();

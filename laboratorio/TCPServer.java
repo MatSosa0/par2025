@@ -11,10 +11,12 @@ import java.io.*;
 import java.net.*;
 
 public class TCPServer {
+    @SuppressWarnings({"ConvertToTryWithResources", "CallToPrintStackTrace"})
     public static void main(String[] args) {
         final int SERVER_PORT = 9876;
 
         try {
+            @SuppressWarnings("resource")
             ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
             System.out.println("Servidor TCP escuchando en el puerto " + SERVER_PORT + "...");
 
