@@ -1,5 +1,4 @@
 openapi: 3.0.0
-
 info:
   title: API de Sistema de Facturación y Stock
   description: API para gestionar facturas, productos, clientes y proveedores.
@@ -21,6 +20,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Factura'
+        '500':
+          description: Error interno del servidor
     post:
       summary: Crear una nueva factura
       requestBody:
@@ -32,30 +33,27 @@ paths:
       responses:
         '201':
           description: Factura creada correctamente
+        '400':
+          description: Datos inválidos en la solicitud
+        '500':
+          description: Error interno del servidor
 
   /facturas/{id}:
     get:
       summary: Obtener una factura por su ID
-      description: Devuelve la información de una factura específica usando su ID.
       parameters:
         - name: id
           in: path
           required: true
-          description: ID único de la factura
           schema:
             type: integer
       responses:
         '200':
           description: Factura obtenida correctamente
-          content:
-            application/json:
-              example:
-                id: 1
-                numero: "F-2024-001"
-                cliente: "Juan Pérez"
-                total: 120.50
         '404':
           description: Factura no encontrada
+        '500':
+          description: Error interno del servidor
     put:
       summary: Actualizar una factura por su ID
       parameters:
@@ -73,6 +71,12 @@ paths:
       responses:
         '200':
           description: Factura actualizada correctamente
+        '400':
+          description: Datos inválidos en la solicitud
+        '404':
+          description: Factura no encontrada
+        '500':
+          description: Error interno del servidor
     delete:
       summary: Eliminar una factura por su ID
       parameters:
@@ -84,6 +88,10 @@ paths:
       responses:
         '204':
           description: Factura eliminada correctamente
+        '404':
+          description: Factura no encontrada
+        '500':
+          description: Error interno del servidor
 
   /productos:
     get:
@@ -91,6 +99,8 @@ paths:
       responses:
         '200':
           description: Lista de productos obtenida correctamente
+        '500':
+          description: Error interno del servidor
     post:
       summary: Crear un nuevo producto
       requestBody:
@@ -102,6 +112,10 @@ paths:
       responses:
         '201':
           description: Producto creado correctamente
+        '400':
+          description: Datos inválidos en la solicitud
+        '500':
+          description: Error interno del servidor
 
   /productos/{id}:
     get:
@@ -117,6 +131,46 @@ paths:
           description: Producto obtenido correctamente
         '404':
           description: Producto no encontrado
+        '500':
+          description: Error interno del servidor
+    put:
+      summary: Actualizar un producto por su ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Producto'
+      responses:
+        '200':
+          description: Producto actualizado correctamente
+        '400':
+          description: Datos inválidos en la solicitud
+        '404':
+          description: Producto no encontrado
+        '500':
+          description: Error interno del servidor
+    delete:
+      summary: Eliminar un producto por su ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Producto eliminado correctamente
+        '404':
+          description: Producto no encontrado
+        '500':
+          description: Error interno del servidor
 
   /clientes:
     get:
@@ -124,6 +178,8 @@ paths:
       responses:
         '200':
           description: Lista de clientes obtenida correctamente
+        '500':
+          description: Error interno del servidor
     post:
       summary: Crear un nuevo cliente
       requestBody:
@@ -135,21 +191,34 @@ paths:
       responses:
         '201':
           description: Cliente creado correctamente
+        '400':
+          description: Datos inválidos en la solicitud
+        '500':
+          description: Error interno del servidor
 
-  /clientes/{id}:
+  /proveedores:
     get:
-      summary: Obtener un cliente por su ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
+      summary: Obtener todos los proveedores registrados
       responses:
         '200':
-          description: Cliente obtenido correctamente
-        '404':
-          description: Cliente no encontrado
+          description: Lista de proveedores obtenida correctamente
+        '500':
+          description: Error interno del servidor
+    post:
+      summary: Crear un nuevo proveedor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proveedor'
+      responses:
+        '201':
+          description: Proveedor creado correctamente
+        '400':
+          description: Datos inválidos en la solicitud
+        '500':
+          description: Error interno del servidor
 
 components:
   schemas:
@@ -194,3 +263,15 @@ components:
       required:
         - nombre
         - email
+    Proveedor:
+      type: object
+      properties:
+        id:
+          type: integer
+        nombre:
+          type: string
+        telefono:
+          type: string
+      required:
+        - nombre
+        - telefono
