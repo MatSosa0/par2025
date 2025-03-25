@@ -1,0 +1,196 @@
+openapi: 3.0.0
+
+info:
+  title: API de Sistema de Facturación y Stock
+  description: API para gestionar facturas, productos, clientes y proveedores.
+  version: 1.0.0
+
+servers:
+  - url: https://localhost:8080/par2024
+
+paths:
+  /facturas:
+    get:
+      summary: Obtener todas las facturas
+      responses:
+        '200':
+          description: Lista de facturas obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Factura'
+    post:
+      summary: Crear una nueva factura
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Factura'
+      responses:
+        '201':
+          description: Factura creada correctamente
+
+  /facturas/{id}:
+    get:
+      summary: Obtener una factura por su ID
+      description: Devuelve la información de una factura específica usando su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID único de la factura
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Factura obtenida correctamente
+          content:
+            application/json:
+              example:
+                id: 1
+                numero: "F-2024-001"
+                cliente: "Juan Pérez"
+                total: 120.50
+        '404':
+          description: Factura no encontrada
+    put:
+      summary: Actualizar una factura por su ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Factura'
+      responses:
+        '200':
+          description: Factura actualizada correctamente
+    delete:
+      summary: Eliminar una factura por su ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Factura eliminada correctamente
+
+  /productos:
+    get:
+      summary: Obtener todos los productos en stock
+      responses:
+        '200':
+          description: Lista de productos obtenida correctamente
+    post:
+      summary: Crear un nuevo producto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Producto'
+      responses:
+        '201':
+          description: Producto creado correctamente
+
+  /productos/{id}:
+    get:
+      summary: Obtener un producto por su ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Producto obtenido correctamente
+        '404':
+          description: Producto no encontrado
+
+  /clientes:
+    get:
+      summary: Obtener todos los clientes
+      responses:
+        '200':
+          description: Lista de clientes obtenida correctamente
+    post:
+      summary: Crear un nuevo cliente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cliente'
+      responses:
+        '201':
+          description: Cliente creado correctamente
+
+  /clientes/{id}:
+    get:
+      summary: Obtener un cliente por su ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Cliente obtenido correctamente
+        '404':
+          description: Cliente no encontrado
+
+components:
+  schemas:
+    Factura:
+      type: object
+      properties:
+        id:
+          type: integer
+        numero:
+          type: string
+        cliente:
+          type: string
+        total:
+          type: number
+      required:
+        - numero
+        - cliente
+        - total
+    Producto:
+      type: object
+      properties:
+        id:
+          type: integer
+        nombre:
+          type: string
+        precio:
+          type: number
+        descripcion:
+          type: string
+      required:
+        - nombre
+        - precio
+    Cliente:
+      type: object
+      properties:
+        id:
+          type: integer
+        nombre:
+          type: string
+        email:
+          type: string
+      required:
+        - nombre
+        - email

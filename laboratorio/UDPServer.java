@@ -9,10 +9,13 @@
     -Revisar que el puerto 9877 esté disponible y que no esté bloqueado o este en uso por otro programa.
  */
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 public class UDPServer {
+    @SuppressWarnings("CallToPrintStackTrace")
     public static void main(String[] args) {
         final int SERVER_PORT = 9877;
 
