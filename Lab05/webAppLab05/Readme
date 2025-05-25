@@ -1,0 +1,17 @@
+IDE usado: "Apache NetBeans 25 con Maven"
+
+Servidor:"Apache Tomcat 9.0.105"
+
+JDK:"JDK 21 o superior (se uso JDK 23)"
+
+## Cómo ejecutar
+
+1. Clonar el repositorio.
+2. Abrir el proyecto en NetBeans (Java con Maven > Web Application).
+3. Configurar Apache Tomcat 9 como servidor.
+4. Ejecutar con botón derecho > Run.
+5. Acceder a las páginas JSP desde el navegador:
+
+- `/index.jsp` — ejemplos de expresiones.
+- `/factorial.jsp` — cálculo del factorial con contador de visitas.
+- `/galeria.jsp` — galería dinámica de imágenes (agregar .jpg en `/imagenes`).
